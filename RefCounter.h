@@ -4,6 +4,8 @@ namespace smart_ptr
 {
 	class RefCounter
 	{
+		typedef unsigned long long u_long_long;
+
 	public:
 		RefCounter();
 		~RefCounter();
@@ -11,13 +13,13 @@ namespace smart_ptr
 		void addRef();
 		void removeRef();
 
-		const long long get_count() const 
+		const u_long_long get_count() const 
 		{
 			return *counter;
 		}
 
 	private:
-		long long* counter;
+		u_long_long* counter;
 	};
 
 }
