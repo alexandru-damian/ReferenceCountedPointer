@@ -1,0 +1,5 @@
+pch.h
+pch.cpp
+MyRefCountedPointer.vcxproj.user
+MyRefCountedPointer.vcxproj
+MyRefCountedPointer.vcxproj.filters
