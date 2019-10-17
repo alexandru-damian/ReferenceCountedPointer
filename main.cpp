@@ -1,17 +1,13 @@
-#include "RefCounter.h"
+#include "RefCountedPointer.h"
 #include <iostream>
 
 
+using namespace smart_ptr;
+
 int main() 
 {
-	smart_ptr::RefCounter refCounter;
-	std::cout << "current count:" << refCounter.get_count() << std::endl;
 
-	refCounter.addRef();
-	std::cout<<"current count:"<<refCounter.get_count()<<std::endl;
-
-	refCounter.removeRef();
-	std::cout << "current count:" << refCounter.get_count() << std::endl;
+	RefCountedPointer<int> x;
 
 	return 0;
 }
