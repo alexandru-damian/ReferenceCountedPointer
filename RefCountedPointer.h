@@ -11,6 +11,7 @@ namespace smart_ptr
 	public:
 		RefCountedPointer();
 		~RefCountedPointer();
+		operator bool() const;
 
 	private:
 		T* m_object;
@@ -39,6 +40,12 @@ namespace smart_ptr
 
 		m_object = nullptr;
 		refCounter = nullptr;
+	}
+
+	template<class T>
+	inline RefCountedPointer<T>::operator bool() const
+	{
+		return m_object != nullptr;
 	}
 
 }
