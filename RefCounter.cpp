@@ -2,7 +2,7 @@
 
 namespace smart_ptr
 {
-	RefCounter::RefCounter() :counter(new u_long_long(1)) {}
+	RefCounter::RefCounter() :counter(new u_long_long(0)) {}
 	RefCounter::~RefCounter()
 	{
 		if (counter != nullptr) 
