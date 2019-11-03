@@ -1,4 +1,4 @@
-#include "RefCounter.h"
+#include "RefCountedPointer.h"
 
 namespace smart_ptr
 {
