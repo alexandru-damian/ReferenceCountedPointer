@@ -3,6 +3,8 @@
 
 #include "RefCounter.h"
 
+#include <utility>
+
 namespace smart_ptr
 {
 	template <class T>
@@ -13,7 +15,31 @@ namespace smart_ptr
 		~RefCountedPointer();
 		RefCountedPointer(T*);
 		RefCountedPointer(const RefCountedPointer&);
+
+		RefCountedPointer& operator=(RefCountedPointer&&);
 		RefCountedPointer& operator=(const RefCountedPointer&);
+
+		void reset()
+		{
+			if (refCounter) {
+
+				refCounter->removeRef();
+
+				if (refCounter->get_count() == 0)
+				{
+					if (m_object)
+					{
+						delete m_object;
+					}
+
+					delete refCounter;
+
+					refCounter = nullptr;
+				}
+			}
+
+			m_object = nullptr;
+		}
 
 		T& operator*() const;
 		operator bool() const;
@@ -38,19 +64,7 @@ namespace smart_ptr
 	template <class T>
 	RefCountedPointer<T>::~RefCountedPointer()
 	{
-
-		if(refCounter != nullptr)
-		{
-			refCounter->removeRef();
-			if (refCounter->get_count() == 0) 
-			{
-				delete m_object;
-				delete refCounter;
-				refCounter = nullptr;
-			}
-		}
-
-		m_object = nullptr;
+		reset();
 	}
 
 	template<class T>
@@ -69,10 +83,29 @@ namespace smart_ptr
 		m_object{other.m_object},
 		refCounter{other.refCounter}
 	{
-		if (m_object) 
+		if (m_object && refCounter) 
 		{
 			refCounter->addRef();
 		}
+	}
+
+	template<class T>
+	RefCountedPointer<T> & RefCountedPointer<T>::operator=(RefCountedPointer && other)
+	{
+		if (*m_object != *(other.m_object)) 
+		{
+			reset();
+
+			m_object = new T();
+
+			m_object = other.m_object;
+			refCounter = other.refCounter;
+
+			other.m_object = nullptr;
+			other.refCounter = nullptr;
+		}
+
+		return *this;
 	}
 
 	template<class T>
@@ -80,12 +113,19 @@ namespace smart_ptr
 	{
 		if (*m_object != *(other.m_object))
 		{
-			if (other)
+			refCounter->removeRef();
+			
+			if (m_object) 
 			{
-				m_object = other.m_object;
-				refCounter = other.refCounter;
-				refCounter->addRef();
+				m_object = nullptr;
 			}
+
+			m_object = new T();
+
+			m_object = other.m_object;
+			refCounter = other.refCounter;
+
+			refCounter->addRef();
 		}
 
 		return *this;
