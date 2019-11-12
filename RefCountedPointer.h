@@ -14,7 +14,9 @@ namespace smart_ptr
 		RefCountedPointer();
 		~RefCountedPointer();
 		RefCountedPointer(T*);
+
 		RefCountedPointer(const RefCountedPointer&);
+		RefCountedPointer(RefCountedPointer&&);
 
 		RefCountedPointer& operator=(RefCountedPointer&&);
 		RefCountedPointer& operator=(const RefCountedPointer&);
@@ -90,13 +92,19 @@ namespace smart_ptr
 	}
 
 	template<class T>
+	RefCountedPointer<T>::RefCountedPointer(RefCountedPointer<T> && other):
+		m_object{other.m_object},
+		refCounter{other.refCounter}
+	{
+		other.m_object = nullptr;
+	}
+
+	template<class T>
 	RefCountedPointer<T> & RefCountedPointer<T>::operator=(RefCountedPointer && other)
 	{
 		if (*m_object != *(other.m_object)) 
 		{
 			reset();
-
-			m_object = new T();
 
 			m_object = other.m_object;
 			refCounter = other.refCounter;
@@ -119,8 +127,6 @@ namespace smart_ptr
 			{
 				m_object = nullptr;
 			}
-
-			m_object = new T();
 
 			m_object = other.m_object;
 			refCounter = other.refCounter;

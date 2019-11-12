@@ -10,6 +10,10 @@ struct A
 {
 	std::string x = { "yellow" };
 
+	A(){}
+
+	A(const A& other) {}
+
 	A& operator=(A&& other)  
 	{
 		x = std::move(other.x);
@@ -56,6 +60,8 @@ int main()
 
 	RefCountedPointer<A> ttest(new A());
 	A* c = new A();
+
+	RefCountedPointer<A> moveCtorTest(RefCountedPointer<A>());
 
 	RefCountedPointer<A> moveTest(c);
 
