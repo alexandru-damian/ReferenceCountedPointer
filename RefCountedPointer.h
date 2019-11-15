@@ -97,6 +97,7 @@ namespace smart_ptr
 		refCounter{other.refCounter}
 	{
 		other.m_object = nullptr;
+		other.refCounter = nullptr;
 	}
 
 	template<class T>

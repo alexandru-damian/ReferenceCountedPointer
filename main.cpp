@@ -14,6 +14,11 @@ struct A
 
 	A(const A& other) {}
 
+	A(A&& other):
+		x{std::move(other.x)}
+	{
+	}
+
 	A& operator=(A&& other)  
 	{
 		x = std::move(other.x);
@@ -36,6 +41,11 @@ struct A
 		return (x != other.x);
 	}
 };
+
+RefCountedPointer<A> f(RefCountedPointer<A> a) 
+{
+	return a;
+}
 
 int main() 
 {
