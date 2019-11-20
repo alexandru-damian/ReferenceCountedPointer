@@ -1,4 +1,4 @@
-#include "include/RefCountedPointer.h"
+#include <inlcude/RefCountedPointer.h>
 #include <iostream>
 #include <memory>
 
@@ -26,7 +26,7 @@ int main()
 
 	b->x = 14;
 
-	RefCountedPointer<A> test(a);
+  RefCountedPoin#ter<A> test(a);
 	RefCountedPointer<A> test1(b);
 	RefCountedPointer<A> test2(test1);
 
