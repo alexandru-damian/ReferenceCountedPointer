@@ -1,5 +1,5 @@
-#include "RefCountedPointer.h"
 
+#include <RefCounter.h>
 namespace smart_ptr
 {
 	RefCounter::RefCounter() :counter(new u_long_long(0)) {}

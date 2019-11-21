@@ -1,22 +1,22 @@
 #ifndef REF_COUNTED_POINTER_H
 #define REF_COUNTED_POINTER_H
 
-#include "RefCounter.h"
+#include <RefCounter.h>
 
 namespace smart_ptr
 {
 	template <class T>
-  __declspec(dllexport) class RefCountedPointer
-	{
-	public:
-		__declspec(dllexport) ~RefCountedPointer();
-		__declspec(dllexport) RefCountedPointer(T*);
-		__declspec(dllexport) RefCountedPointer(const RefCountedPointer&);
-		__declspec(dllexport) RefCountedPointer& operator=(const RefCountedPointer&);
-		__declspec(dllexport) RefCountedPointer();
+class RefCountedPointer
+{
+  public:
+~RefCountedPointer();
+RefCountedPointer(T*);
+RefCountedPointer(const RefCountedPointer&);
+RefCountedPointer& operator=(const RefCountedPointer&);
+RefCountedPointer();
 
-		__declspec(dllexport) T& operator*() const;
-		__declspec(dllexport) operator bool() const;
+T& operator*() const;
+operator bool() const;
 
 		unsigned long long use_count() const
 		{
